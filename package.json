@@ -1,0 +1,38 @@
+{
+  "name": "helios-transport",
+  "version": "1.0.0",
+  "description": "A Helium Network Ledger transport",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vulet/helios-transport.git"
+  },
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/vulet/helios-transport/issues"
+  },
+  "homepage": "https://github.com/vulet/helios-transport#readme",
+  "devDependencies": {
+    "@ledgerhq/hw-transport-mocker": "^5.28.0",
+    "@types/bs58": "^4.0.1",
+    "@types/create-hash": "^1.2.2",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.19.3",
+    "jest": "^26.6.1",
+    "ts-jest": "^26.4.3",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@helium/crypto": "^3.0.0",
+    "@helium/transactions": "^3.0.0",
+    "@ledgerhq/hw-transport": "^5.28.0",
+    "big-integer": "^1.6.48",
+    "bs58": "^4.0.1",
+    "create-hash": "^1.2.0"
+  }
+}
