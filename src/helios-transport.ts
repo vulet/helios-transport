@@ -56,8 +56,10 @@ export default class HNT {
     return this.transport
       .send(0xe0, 0x08, 0x00, 0x00, data)
       .then((response: any) => {
+        const signature = response.slice(response.length - 66, response.length - 2);
+        if(signature !== 64) throw 'User has declined.';
         return {
-          signature: response.slice(response.length - 66, response.length - 2),
+          signature: signature,
         };
       });
   }

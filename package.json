@@ -1,6 +1,6 @@
 {
   "name": "helios-transport",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Helium Network Ledger transport",
   "main": "build/index.js",
   "module": "build/index.js",
