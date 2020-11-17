@@ -1,4 +1,5 @@
-import { ledgerSerialize, bs58CheckEncode } from './utils';
+import { utils } from '@helium/crypto';
+import { ledgerSerialize } from './utils';
 
 /**
  * A Helium Ledger API
@@ -36,7 +37,7 @@ export default class HNT {
         return {
           bin: response.slice(1, 34),
           publicKey: response.slice(2, 34),
-          b58: bs58CheckEncode(0, response.slice(1, 34)),
+          b58: utils.bs58CheckEncode(0, response.slice(1, 34)),
         };
       });
   }
@@ -57,7 +58,7 @@ export default class HNT {
       .send(0xe0, 0x08, 0x00, 0x00, data)
       .then((response: any) => {
         const signature = response.slice(response.length - 66, response.length - 2);
-        if(signature !== 64) throw 'User has declined.';
+        if(signature.length !== 64) throw 'User has declined.';
         return {
           signature: signature,
         };

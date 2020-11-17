@@ -1,6 +1,4 @@
 import BigInt from 'big-integer';
-import bs58 from 'bs58';
-import createHash from 'create-hash';
 
 export const bnSerialize = (amount: number): Buffer => {
   let hex = BigInt(amount).toString(16);
@@ -24,15 +22,3 @@ export const ledgerSerialize = (transaction: any): Buffer => {
   return Buffer.from(txSerialized);
 };
 
-// https://github.com/helium/helium-js/pull/96
-export const sha256 = (buffer: Buffer | string): Buffer => createHash('sha256').update(buffer).digest();
-export const bs58CheckEncode = (
-  version: number,
-  binary: Buffer | Uint8Array,
-): string => {
-  const vPayload = Buffer.concat([Buffer.from([version]), binary]);
-  const checksum = sha256(Buffer.from(sha256(vPayload)));
-  const checksumBytes = Buffer.alloc(4, checksum, 'hex');
-  const result = Buffer.concat([vPayload, checksumBytes]);
-  return bs58.encode(result);
-};
