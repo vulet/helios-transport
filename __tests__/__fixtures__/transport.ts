@@ -1,6 +1,6 @@
 import { Address } from '@helium/crypto';
 import {
-  createTransportReplayer,
+  openTransportReplayer,
   RecordStore,
 } from '@ledgerhq/hw-transport-mocker';
 import HNT from '../../src/helios-transport';
@@ -11,13 +11,12 @@ export const ledgerHex = '0080c6a47e8d0300000000000000000001000000000000000001d9
 export const quadrillionBones = 1000000000000000;
 
 export const findJack = async () => {
-  const Transport = createTransportReplayer(
+  const transport = await openTransportReplayer(
     RecordStore.fromString(`
     => e00200000100
     <= 0001594ae08bd8ef1cc68313dd98941b09f9210f9a47fe94106d4d881825f2d652b19000
     `),
   );
-  const transport = await Transport.open();
   const hnt = new HNT(transport);
   const result = await hnt.getPublicKey();
   const jack = new Address(0, 1, result.publicKey);
