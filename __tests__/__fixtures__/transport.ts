@@ -1,4 +1,4 @@
-import { Address } from '@helium/crypto';
+import { Address, KeyType, NetType } from '@helium/crypto';
 import {
   openTransportReplayer,
   RecordStore,
@@ -19,6 +19,6 @@ export const findJack = async () => {
   );
   const hnt = new HNT(transport);
   const result = await hnt.getPublicKey();
-  const jack = new Address(0, 1, result.publicKey);
+  const jack = new Address(0, NetType.MAINNET, KeyType.ED25519_KEY_TYPE, result.publicKey);
   return jack;
 };
