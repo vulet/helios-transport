@@ -1,6 +1,6 @@
 {
   "name": "helios-transport",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Helium Network Ledger transport",
   "main": "build/index.js",
   "module": "build/index.js",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/vulet/helios-transport.git"
   },
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/vulet/helios-transport/issues"
   },
