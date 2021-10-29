@@ -1,6 +1,6 @@
 {
   "name": "helios-transport",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Helium Network Ledger transport",
   "main": "build/index.js",
   "module": "build/index.js",
@@ -18,17 +18,16 @@
   },
   "homepage": "https://github.com/vulet/helios-transport#readme",
   "devDependencies": {
-    "@ledgerhq/hw-transport-mocker": "^6.0.2",
-    "@types/jest": "^26.0.15",
-    "jest": "^27.0.6",
-    "ts-jest": "^27.0.3",
-    "typescript": "^4.3.5"
+    "@ledgerhq/hw-transport-mocker": "^6.11.2",
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@helium/crypto": "^3.24.0",
-    "@helium/transactions": "^3.34.0",
+    "@helium/crypto": "^3.45.0",
+    "@helium/transactions": "^3.37.0",
     "@ledgerhq/hw-transport": "^6.0.2",
-    "@types/node": "^15.14.0",
-    "big-integer": "^1.6.48"
+    "big-integer": "^1.6.50"
   }
 }
