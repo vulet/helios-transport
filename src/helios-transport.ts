@@ -15,7 +15,7 @@ const INS_SIGN_PAYMENT_V1 = 0x08;
  */
 
 export default class HNT {
-  private transport: any;
+  private transport: Transport;
 
   constructor(transport: Transport, scrambleKey: string = 'HNT') {
     this.transport = transport;
@@ -33,12 +33,18 @@ export default class HNT {
    */
 
   getPublicKey(
-    account?: number,
+    address_index?: number,
     boolDisplay?: boolean,
   ): Promise<{ b58: string, publicKey: Buffer, bin: Buffer }> {
     let buffer = Buffer.from([0]);
     return this.transport
-      .send(CLA, INS_GET_PUBKEY, boolDisplay ? 0x01 : 0x00, account, buffer)
+      .send(
+        CLA,
+        INS_GET_PUBKEY,
+        boolDisplay ? 0x01 : 0x00,
+        address_index ? address_index : 0x00,
+        buffer
+      )
       .then((response: any) => {
         return {
           bin: response.slice(1, 34),
@@ -57,11 +63,16 @@ export default class HNT {
 
   signTransaction(
     transaction: any,
-    account?: number
+    address_index?: number
   ): Promise<{ signature: Buffer }> {
     const data = ledgerSerialize(transaction);
     return this.transport
-      .send(CLA, INS_SIGN_PAYMENT_V1, account, CLA_OFFSET, data)
+      .send(
+        CLA,
+        INS_SIGN_PAYMENT_V1,
+        address_index ? address_index : 0x00,
+        CLA_OFFSET,
+        data)
       .then((response: any) => {
         const signature = response.slice(response.length - 66, response.length - 2);
         if(signature.length !== 64) throw 'User has declined.';
