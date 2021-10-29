@@ -16,9 +16,9 @@ const hnt = await TransportBLE.create()
 .then((transport) => new HNT(transport));
 
 // publicKey
-const publicKey = hnt.getPublicKey().then(o => o.publicKey);
+const publicKey = await hnt.getPublicKey().then(o => o.publicKey);
 // base58 address
-const base58Address = hnt.getPublicKey().then(o => o.b58);
+const base58Address = await hnt.getPublicKey().then(o => o.b58);
 
 // prepare helium-js transaction
 const paymentTxn = new PaymentV1({
