@@ -7,12 +7,17 @@ Ledger Hardware Wallet HNT JavaScript bindings.
 # Examples
 ```javascript
 import TransportBLE from '@ledgerhq/hw-transport-web-ble';
+import TransportHID from '@ledgerhq/hw-transport-node-hid';
 import { PaymentV1 } from '@helium/transactions';
 import { Client } from '@helium/http';
 import { HNT } from "helios-transport";
 
-// start connection
+// start web Bluetooth connection
 const hnt = await TransportBLE.create()
+.then((transport) => new HNT(transport));
+
+// start node USB connection
+const hnt = await TransportHID.create()
 .then((transport) => new HNT(transport));
 
 // publicKey
