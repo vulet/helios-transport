@@ -1,5 +1,10 @@
+import type Transport from "@ledgerhq/hw-transport";
 import { utils } from '@helium/crypto';
 import { ledgerSerialize } from './utils';
+const CLA = 0xe0;
+const CLA_OFFSET = 0x00;
+const INS_GET_PUBKEY = 0x02;
+const INS_SIGN_PAYMENT_V1 = 0x08;
 
 /**
  * A Helium Ledger API
@@ -12,7 +17,7 @@ import { ledgerSerialize } from './utils';
 export default class HNT {
   private transport: any;
 
-  constructor(transport: any, scrambleKey: string = 'HNT') {
+  constructor(transport: Transport, scrambleKey: string = 'HNT') {
     this.transport = transport;
     transport.decorateAppAPIMethods(
       this, ['getPublicKey', 'signTransaction'],
@@ -22,17 +27,18 @@ export default class HNT {
 
   /**
    * get Helium publickey.
+   * @param bip32 account number
    * @option boolDisplay optionally enable or not the display
    * @return an object with publicKey, bin, and b58 address
-   * @example
-   * hnt.getPublicKey().then(o => o.publicKey);
    */
 
   getPublicKey(
+    account?: number,
     boolDisplay?: boolean,
   ): Promise<{ b58: string, publicKey: Buffer, bin: Buffer }> {
+    let buffer = Buffer.from([0]);
     return this.transport
-      .send(0xe0, 0x02, boolDisplay ? 0x01 : 0x00, 0x00, Buffer.from([0]))
+      .send(CLA, INS_GET_PUBKEY, boolDisplay ? 0x01 : 0x00, account, buffer)
       .then((response: any) => {
         return {
           bin: response.slice(1, 34),
@@ -45,17 +51,17 @@ export default class HNT {
   /**
    * sign a Helium transaction.
    * @param transaction protobuf to sign
+   * @param transaction bip32 account number to sign
    * @return an object with the signature and the status
-   * @example
-   * hnt.signTransaction(transaction).then(o => o.signature);
    */
 
   signTransaction(
     transaction: any,
+    account?: number
   ): Promise<{ signature: Buffer }> {
     const data = ledgerSerialize(transaction);
     return this.transport
-      .send(0xe0, 0x08, 0x00, 0x00, data)
+      .send(CLA, INS_SIGN_PAYMENT_V1, account, CLA_OFFSET, data)
       .then((response: any) => {
         const signature = response.slice(response.length - 66, response.length - 2);
         if(signature.length !== 64) throw 'User has declined.';
