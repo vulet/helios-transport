@@ -27,7 +27,7 @@ export default class HNT {
 
   /**
    * get Helium publickey.
-   * @param bip32 account number
+   * @param bip32 account, specifically a bip44 address_index number
    * @option boolDisplay optionally enable or not the display
    * @return an object with publicKey, bin, and b58 address
    */
@@ -51,7 +51,7 @@ export default class HNT {
   /**
    * sign a Helium transaction.
    * @param transaction protobuf to sign
-   * @param transaction bip32 account number to sign
+   * @param bip32 account, specifically a bip44 address_index number, to sign
    * @return an object with the signature and the status
    */
 
