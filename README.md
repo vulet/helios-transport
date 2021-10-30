@@ -10,20 +10,20 @@ import TransportBLE from '@ledgerhq/hw-transport-web-ble';
 import TransportHID from '@ledgerhq/hw-transport-node-hid';
 import { PaymentV1 } from '@helium/transactions';
 import { Client } from '@helium/http';
-import { HNT } from "helios-transport";
+import { HNT } from 'helios-transport';
 
 // start web Bluetooth connection
 const hnt = await TransportBLE.create()
-.then((transport) => new HNT(transport));
+  .then((transport) => new HNT(transport));
 
 // start node USB connection
 const hnt = await TransportHID.create()
-.then((transport) => new HNT(transport));
+  .then((transport) => new HNT(transport));
 
 // publicKey
-const publicKey = await hnt.getPublicKey().then(o => o.publicKey);
+const publicKey = await hnt.getPublicKey().then((o) => o.publicKey);
 // base58 address
-const base58Address = await hnt.getPublicKey().then(o => o.b58);
+const base58Address = await hnt.getPublicKey().then((o) => o.b58);
 
 // prepare helium-js transaction
 const paymentTxn = new PaymentV1({

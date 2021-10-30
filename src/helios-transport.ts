@@ -1,4 +1,4 @@
-import type Transport from "@ledgerhq/hw-transport";
+import type Transport from '@ledgerhq/hw-transport';
 import { utils } from '@helium/crypto';
 import { ledgerSerialize } from './utils';
 const CLA = 0xe0;
@@ -36,22 +36,20 @@ export default class HNT {
     address_index?: number,
     boolDisplay?: boolean,
   ): Promise<{ b58: string, publicKey: Buffer, bin: Buffer }> {
-    let buffer = Buffer.from([0]);
+    const buffer = Buffer.from([0]);
     return this.transport
       .send(
         CLA,
         INS_GET_PUBKEY,
         boolDisplay ? 0x01 : 0x00,
-        address_index ? address_index : 0x00,
-        buffer
+        address_index || 0x00,
+        buffer,
       )
-      .then((response: any) => {
-        return {
-          bin: response.slice(1, 34),
-          publicKey: response.slice(2, 34),
-          b58: utils.bs58CheckEncode(0, response.slice(1, 34)),
-        };
-      });
+      .then((response: any) => ({
+        bin: response.slice(1, 34),
+        publicKey: response.slice(2, 34),
+        b58: utils.bs58CheckEncode(0, response.slice(1, 34)),
+      }));
   }
 
   /**
@@ -63,21 +61,22 @@ export default class HNT {
 
   signTransaction(
     transaction: any,
-    address_index?: number
+    address_index?: number,
   ): Promise<{ signature: Buffer }> {
     const data = ledgerSerialize(transaction);
     return this.transport
       .send(
         CLA,
         INS_SIGN_PAYMENT_V1,
-        address_index ? address_index : 0x00,
+        address_index || 0x00,
         CLA_OFFSET,
-        data)
+        data,
+      )
       .then((response: any) => {
         const signature = response.slice(response.length - 66, response.length - 2);
-        if(signature.length !== 64) throw 'User has declined.';
+        if (signature.length !== 64) throw 'User has declined.';
         return {
-          signature: signature,
+          signature,
         };
       });
   }
