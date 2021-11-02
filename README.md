@@ -30,7 +30,7 @@ const address = await hnt.getPublicKey(112);
 ```javascript
 // Prepare @helium-js PaymentV1 transaction
 const paymentTxn = new PaymentV1({
-  payer: bob.address,
+  payer: bob,
   payee: alice,
   amount: 10,
   nonce: account.speculativeNonce + 1,
@@ -44,9 +44,9 @@ paymentTxn.signature = signedTxn.signature;
 client.transactions.submit(paymentTxn.toString());
 ```
 ```javascript
-// Prepare @helium-js  TokenBurnV1 transaction
+// Prepare @helium-js TokenBurnV1 transaction
 const burnTxn = new burnTxn({
-  payer: bob.address,
+  payer: bob,
   payee: alice,
   amount: 1,
   nonce: account.speculativeNonce + 1,
@@ -54,7 +54,7 @@ const burnTxn = new burnTxn({
 });
 
 // create Ledger signature
-const signature = await hnt.signBurnV1(burnTxn);
+const signedTxn = await hnt.signBurnV1(burnTxn);
 burnTxn.signature = signedTxn.signature;
 
 // submit transaction
