@@ -10,7 +10,7 @@ export const bnSerialize = (amount: number): Buffer => {
   return Buffer.from(u8);
 };
 
-export const ledgerSerialize = (transaction: any): Buffer => {
+export const serializePaymentV1 = (transaction: any): Buffer => {
   const txSerialized = Buffer.concat([
     bnSerialize(transaction.amount),
     bnSerialize(transaction.fee),
@@ -22,3 +22,17 @@ export const ledgerSerialize = (transaction: any): Buffer => {
   return Buffer.from(txSerialized);
 };
 
+export const serializeBurnV1 = (transaction: any): Buffer => {
+  const memo = Buffer.from(transaction.memo, 'base64');
+  if (memo.length !== 8) throw `Memos should be 8 bytes.`
+  const txSerialized = Buffer.concat([
+    bnSerialize(transaction.amount),
+    bnSerialize(transaction.fee),
+    bnSerialize(transaction.nonce),
+    Buffer.concat([(memo), Buffer.alloc(8 - memo.length)]),
+    Buffer.from([transaction.payee.version]),
+    Buffer.from([transaction.payee.keyType]),
+    Buffer.from(transaction.payee.publicKey),
+  ]);
+  return Buffer.from(txSerialized);
+};

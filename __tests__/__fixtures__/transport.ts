@@ -1,13 +1,12 @@
 import { Address, KeyType, NetType } from '@helium/crypto';
-import {
-  openTransportReplayer,
-  RecordStore,
-} from '@ledgerhq/hw-transport-mocker';
+import { openTransportReplayer, RecordStore } from '@ledgerhq/hw-transport-mocker';
 import HNT from '../../src/helios-transport';
 
 export const jill = Address.fromB58('14bd3ebMAocy9BAEoXwrBcpBTkk2AZvgj4ng5MzNKyax8iK814v');
-export const txToBase64 = 'QowBCiEBWUrgi9jvHMaDE92YlBsJ+SEPmkf+lBBtTYgYJfLWUrESIQHZs1mBeQIsqZIr5WiM1LDMUFEv7vor/IMaNF7akRs8mhgBKAEyQD6m2hcgW5sNJ5Q2tQjNCStoa/W5Id30+/OIeeSVBAIgdRDOvzIBn12ZQQK/5lcLsvXQuTGQKtbYOcW0VSpJLLk=';
-export const ledgerHex = '0080c6a47e8d0300000000000000000001000000000000000001d9b3598179022ca9922be5688cd4b0cc50512feefa2bfc831a345eda911b3c9a';
+export const paymentV1ToBase64 = 'QowBCiEBWUrgi9jvHMaDE92YlBsJ+SEPmkf+lBBtTYgYJfLWUrESIQHZs1mBeQIsqZIr5WiM1LDMUFEv7vor/IMaNF7akRs8mhgBKAEyQD6m2hcgW5sNJ5Q2tQjNCStoa/W5Id30+/OIeeSVBAIgdRDOvzIBn12ZQQK/5lcLsvXQuTGQKtbYOcW0VSpJLLk=';
+export const ledgerPaymentV1Hex = '0080c6a47e8d0300000000000000000001000000000000000001d9b3598179022ca9922be5688cd4b0cc50512feefa2bfc831a345eda911b3c9a';
+export const burnV1ToBase64 = 'igGOAQohAVlK4IvY7xzGgxPdmJQbCfkhD5pH/pQQbU2IGCXy1lKxEiEB2bNZgXkCLKmSK+VojNSwzFBRL+76K/yDGjRe2pEbPJoYASABKkDDSFra+kpDM+HDZgl3TmpFedSUkZQBhnnxJVm9e9DXgBM7P859KAwbX8lyhMxIHxY7HMkS+dVDcySEYUSv4okDMAA=';
+export const ledgerBurnV1Hex = '0100000000000000000000000000000001000000000000006d6f636b6d656d6f0001d9b3598179022ca9922be5688cd4b0cc50512feefa2bfc831a345eda911b3c9a'
 export const quadrillionBones = 1000000000000000;
 
 export const findJack = async () => {
